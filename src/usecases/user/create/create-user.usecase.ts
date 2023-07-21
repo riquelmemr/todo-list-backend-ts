@@ -7,23 +7,26 @@ class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
   execute(data: ICreateUserRequestDTO): IHttpResponse {
-    const { name, email, password } = data;
-    console.log(data);
-
-    const userFound = this.userRepository.getByOne("email", email);
-
-    if (userFound) {
-      throw new Error("User already exists");
+    try {
+      const { name, email, password } = data;
+      
+      const userFound = this.userRepository.getByOne("email", email);
+  
+      if (userFound) {
+        throw new Error("Já existe um usuário com esse email! Tente outro.");
+      }
+  
+      const user = new User(name, email, password);
+      this.userRepository.create(user);
+  
+      return HttpResponse.created({
+        success: true,
+        status: "Usuário criado com sucesso!",
+        body: user
+      });
+    } catch (error: any) {
+      return HttpResponse.badRequest(error);
     }
-
-    const user = new User(name, email, password);
-    const userCreated = this.userRepository.create(user);
-
-    return HttpResponse.created({
-      success: true,
-      status: 201,
-      body: userCreated
-    });
   }
 }
 

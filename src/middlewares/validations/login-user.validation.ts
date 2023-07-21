@@ -1,12 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { regexEmail } from "../../helpers/validations";
 
-function createUserValidation(req: Request, res: Response, next: NextFunction) {
-  const { name, email, password } = req.body;
-
-  if (!name) {
-    return res.status(400).json({ error: "O campo 'name' é obrigatório." });
-  }
+function loginUserValidation(req: Request, res: Response, next: NextFunction) {
+  const { email, password } = req.body;
 
   if (!email || !regexEmail.test(email)) {
     return res.status(400).json({ error: "O campo 'email' está vazio ou inválido." });
@@ -19,5 +15,5 @@ function createUserValidation(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export { createUserValidation };
+export { loginUserValidation };
 

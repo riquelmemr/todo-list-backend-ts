@@ -11,4 +11,4 @@ class TaskRepository extends BaseRepository<Task> {
   }
 }
 
-export default TaskRepository;
+export { TaskRepository };
