@@ -23,6 +23,10 @@ class Task {
   public get Id(): string {
     return this.id;
   }
+
+  public get UserId(): string {
+    return this.userId;
+  }
 }
 
 export default Task;

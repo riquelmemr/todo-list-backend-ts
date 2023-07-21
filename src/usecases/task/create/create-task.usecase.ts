@@ -12,8 +12,6 @@ class CreateTaskUseCase {
       const { title, description, userId } = data;
 
       const userFound = this.userRepository.getById(userId);
-
-      console.log(userFound);
   
       if (!userFound) {
         throw new Error("Realize o login para concluir está ação.");

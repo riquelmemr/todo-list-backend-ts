@@ -1,10 +1,10 @@
 import express from "express";
-import { CreateTaskController } from "./controllers/task/create/create-task.controller";
+import { CreateTaskController, DeleteTaskController, FindAllTasksController } from "./controllers/task";
 import { CreateUserController, LoginUserController } from "./controllers/user";
 import { createTaskValidation, createUserValidation, loginUserValidation } from "./middlewares";
 import { TaskRepository } from "./repositories/task/task.repository";
 import { UserRepository } from "./repositories/user/user.repository";
-import { CreateTaskUseCase } from "./usecases/task";
+import { CreateTaskUseCase, DeleteTaskUseCase, FindAllTasksUseCase } from "./usecases/task";
 import { CreateUserUseCase, LoginUserUseCase } from "./usecases/user";
 
 const app = express();
@@ -38,6 +38,18 @@ app.post('/task/:userId/create', createTaskValidation, (req, res) => {
   const createTaskUseCase = new CreateTaskUseCase(userRepository, taskRepository);
   const createTaskController = new CreateTaskController(createTaskUseCase);
   return createTaskController.execute(req, res);
+})
+
+app.delete('/task/:userId/delete/:id', (req, res) => {
+  const deleteTaskUseCase = new DeleteTaskUseCase(userRepository, taskRepository);
+  const deleteTaskController = new DeleteTaskController(deleteTaskUseCase);
+  return deleteTaskController.execute(req, res);
+})
+
+app.get('/task/:userId', (req, res) => {
+  const findAllTasksUseCase = new FindAllTasksUseCase(userRepository, taskRepository);
+  const findAllTasksController = new FindAllTasksController(findAllTasksUseCase);
+  return findAllTasksController.execute(req, res);
 })
 
 app.listen(5001, () => {

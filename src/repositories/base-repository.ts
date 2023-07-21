@@ -33,3 +33,4 @@ class BaseRepository<T> implements IBaseRepository<T> {
 }
 
 export { BaseRepository };
+
