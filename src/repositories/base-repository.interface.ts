@@ -1,9 +1,9 @@
 interface IBaseRepository<T> {
-  create(body: T): T;
+  create(item: T): T;
   getByOne(key: string, value: string): T | undefined;
-  getAll(): T[];
-  update(key: string, value: string, body: T): T;
+  update(id: string, item: any): T;
   delete(key: string, value: string): void;
 }
 
 export { IBaseRepository };
+

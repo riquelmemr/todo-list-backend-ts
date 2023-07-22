@@ -1,13 +1,14 @@
+import { capitalize } from "../helpers/capitalize";
 import { IBaseRepository } from "./base-repository.interface";
 
 class BaseRepository<T> implements IBaseRepository<T> {
-  constructor(protected repository: Array<T>) {
+  constructor(protected repository: T[]) {
     this.repository = repository;
   }
 
-  create(body: T): T {
-    this.repository.push(body);
-    return body;
+  create(item: T): T {
+    this.repository.push(item);
+    return item;
   }
 
   getByOne(key: string, value: string): T | undefined {
@@ -15,15 +16,15 @@ class BaseRepository<T> implements IBaseRepository<T> {
     return item || undefined;
   }
 
-  getAll(): T[] {
-    return this.repository;
-  }
+  update(id: string, item: any): T {
+    const indexFound = this.repository.findIndex((item) => item["Id" as keyof T] === id);
+    const keys = Object.keys(item);
 
-  update(key: string, value: string, item: T): T {
-    const itemFound = this.repository.findIndex((item) => item[key as keyof T] === value);
-    this.repository[itemFound] = item;
+    for (const key of keys) {
+      this.repository[indexFound][capitalize(key) as keyof T] = item[key];
+    }
 
-    return item;
+    return this.repository[indexFound];
   }
 
   delete(key: string, value: string): void {
