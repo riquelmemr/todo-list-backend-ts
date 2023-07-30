@@ -11,6 +11,10 @@ class BaseRepository<T> implements IBaseRepository<T> {
     return item;
   }
 
+  getById(id: string): T | undefined {
+    return this.repository.find((item) => item["Id" as keyof T] === id);
+  }
+
   getByOne(key: string, value: string): T | undefined {
     const item = this.repository.find((item) => item[key as keyof T] === value);
     return item || undefined;

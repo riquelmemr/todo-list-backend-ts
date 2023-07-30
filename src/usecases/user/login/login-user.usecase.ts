@@ -28,7 +28,7 @@ class LoginUserUseCase {
       }
 
       return HttpResponse.ok({
-        sucess: true,
+        success: true,
         status: "Usuário logado com sucesso!",
         body
       })

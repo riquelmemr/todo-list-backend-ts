@@ -1,4 +1,4 @@
-import User from "../../../entities/user";
+import User from "../../../entities/user.entity";
 import { HttpResponse, IHttpResponse } from "../../../helpers/http-response";
 import { UserRepository } from "../../../repositories/user/user.repository";
 import { ICreateUserRequestDTO } from "./create-user.dto";
@@ -22,7 +22,11 @@ class CreateUserUseCase {
       return HttpResponse.created({
         success: true,
         status: "Usuário criado com sucesso!",
-        body: user
+        body: {
+          id: user.Id,
+          name: user.Name,
+          email: user.Email,
+        }
       });
     } catch (error: any) {
       return HttpResponse.badRequest(error);

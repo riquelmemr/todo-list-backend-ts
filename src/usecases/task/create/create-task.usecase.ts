@@ -1,4 +1,4 @@
-import Task from "../../../entities/task";
+import Task from "../../../entities/task.entity";
 import { HttpResponse, IHttpResponse } from "../../../helpers/http-response";
 import { TaskRepository } from "../../../repositories/task/task.repository";
 import { UserRepository } from "../../../repositories/user/user.repository";

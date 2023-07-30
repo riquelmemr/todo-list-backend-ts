@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import { CreateTaskController, DeleteTaskController, FindAllTasksController, UpdateTaskController } from "./controllers/task";
 import { CreateUserController, LoginUserController } from "./controllers/user";
@@ -11,6 +12,7 @@ import { CreateUserUseCase, LoginUserUseCase } from "./usecases/user";
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
