@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 
 function updateTaskValidation(req: Request, res: Response, next: NextFunction) {
-  const { title, description, done, arquived } = req.body;
+  const { title, description, done, archived } = req.body;
 
-  if (!title && !description && !done && !arquived) {
+  if (!title && !description && !done && !archived) {
     return res.status(400).json({ error: "É necessário informar ao menos um campo para atualizar." });
   }
 
@@ -15,12 +15,12 @@ function updateTaskValidation(req: Request, res: Response, next: NextFunction) {
     req.body.done = JSON.parse(done);
   }
 
-  if (arquived) {
-    if (typeof JSON.parse(arquived) !== "boolean") {
-      return res.status(400).json({ error: "O campo 'arquived' está inválido." });
+  if (archived) {
+    if (typeof JSON.parse(archived) !== "boolean") {
+      return res.status(400).json({ error: "O campo 'archived' está inválido." });
     }
 
-    req.body.arquived = JSON.parse(arquived);
+    req.body.archived = JSON.parse(archived);
   }
 
   next();

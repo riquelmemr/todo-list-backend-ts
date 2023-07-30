@@ -1,14 +1,14 @@
 import { HttpResponse } from "../../../helpers/http-response";
 import { TaskRepository } from "../../../repositories/task/task.repository";
 import { UserRepository } from "../../../repositories/user/user.repository";
-import { IUpdateUserRequestDTO } from "./update-task.dto";
+import { IUpdateTaskRequestDTO } from "./update-task.dto";
 
 class UpdateTaskUseCase {
   constructor(private userRepository: UserRepository, private taskRepository: TaskRepository) {}
 
-  execute(data: IUpdateUserRequestDTO) {
+  execute(userId: string, data: IUpdateTaskRequestDTO) {
     try {
-      const { userId, id, title, description, done, arquived } = data;
+      const { id, title, description, done, archived } = data;
 
       const userFound = this.userRepository.getById(userId);
   
@@ -26,7 +26,7 @@ class UpdateTaskUseCase {
         title: title || task.Title,
         description: description || task.Description,
         done: done || task.Done,
-        arquived: arquived || task.Arquived
+        archived: archived || task.Archived
       });
   
       return HttpResponse.ok({

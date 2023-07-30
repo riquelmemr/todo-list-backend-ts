@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Hello World!"
+    message: "Hello World! Application is running!"
   });
 })
 

@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 class Task {
   private id: string;
   private done: boolean;
-  private arquived: boolean;
+  private archived: boolean;
   private createdAt: string;
   
   constructor(
@@ -15,7 +15,7 @@ class Task {
     this.title = title;
     this.description = description;
     this.done = false;
-    this.arquived = false;
+    this.archived = false;
     this.createdAt = new Date().toLocaleDateString('pt-BR');
     this.userId = userId;
   }
@@ -36,8 +36,8 @@ class Task {
     return this.done;
   }
 
-  public get Arquived(): boolean {
-    return this.arquived;
+  public get Archived(): boolean {
+    return this.archived;
   }
 
   public get UserId(): string {
@@ -60,8 +60,8 @@ class Task {
     this.done = done;
   }
 
-  public set Arquived(arquived: boolean) {
-    this.arquived = arquived;
+  public set Archived(archived: boolean) {
+    this.archived = archived;
   }
 }
 

@@ -6,10 +6,18 @@ class FindAllTasksController {
 
   execute(req: Request, res: Response) {
     const { userId } = req.params;
-    const { statusCode, body } = this.findAllTasksUseCase.execute(userId);
+    const { done, archived, title, description } = req.query;
+    
+    const { statusCode, body } = this.findAllTasksUseCase.execute(userId, {
+      done: done ? Boolean(done) : undefined,
+      archived: archived ? Boolean(archived) : undefined,
+      title: title ? String(title) : undefined,
+      description: description ? String(description) : undefined
+    });
 
     return res.status(statusCode).json(body);
   }
 }
 
 export { FindAllTasksController };
+

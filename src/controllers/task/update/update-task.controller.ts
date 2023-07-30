@@ -5,16 +5,15 @@ class UpdateTaskController {
   constructor(private updateTaskUseCase: UpdateTaskUseCase) {}
   
   execute(req: Request, res: Response) {
-    const { title, description, done, arquived } = req.body;
+    const { title, description, done, archived } = req.body;
     const { userId, id } = req.params;
     
-    const { statusCode, body } = this.updateTaskUseCase.execute({
-      userId,
+    const { statusCode, body } = this.updateTaskUseCase.execute(userId, {
       id,
       title,
       description,
       done,
-      arquived
+      archived
     })
 
     return res.status(statusCode).json(body);
@@ -22,3 +21,4 @@ class UpdateTaskController {
 }
 
 export { UpdateTaskController };
+

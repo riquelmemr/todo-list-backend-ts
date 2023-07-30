@@ -1,10 +1,10 @@
-interface IUpdateUserRequestDTO {
-  userId: string;
+interface IUpdateTaskRequestDTO {
   id: string;
   title: string;
   description: string;
   done: boolean;
-  arquived: boolean;
+  archived: boolean;
 }
 
-export { IUpdateUserRequestDTO };
+export { IUpdateTaskRequestDTO };
+
