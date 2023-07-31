@@ -25,8 +25,8 @@ class UpdateTaskUseCase {
       const taskUpdated = this.taskRepository.update(id, {
         title: title || task.Title,
         description: description || task.Description,
-        done: done || task.Done,
-        archived: archived || task.Archived
+        done: done !== undefined ? done : task.Done,
+        archived: archived !== undefined ? archived : task.Archived
       });
   
       return HttpResponse.ok({
