@@ -8,8 +8,7 @@ class HttpResponse {
     return {
       statusCode: 400,
       body: {
-        error: error.name,
-        message: error.message
+        error: error.message
       },
     }
   }
@@ -18,8 +17,7 @@ class HttpResponse {
     return {
       statusCode: 500,
       body: {
-        error: error.name,
-        message: error.message
+        error: error.message
       }
     }
   }
