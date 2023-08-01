@@ -9,8 +9,8 @@ class FindAllTasksController {
     const { done, archived, title, description } = req.query;
     
     const { statusCode, body } = this.findAllTasksUseCase.execute(userId, {
-      done: done ? Boolean(done) : undefined,
-      archived: archived ? Boolean(archived) : undefined,
+      done: done !== undefined ? JSON.parse(done as string) : undefined,
+      archived: archived !== undefined ? JSON.parse(archived as string) : undefined,
       title: title ? String(title) : undefined,
       description: description ? String(description) : undefined
     });
