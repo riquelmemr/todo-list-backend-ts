@@ -11,20 +11,20 @@ class TaskRepository extends BaseRepository<Task> {
     const { done, archived, title, description } = filters;
     let tasks = this.repository.filter((item) => item.UserId === userId);
 
-    if (done) {
-      tasks = this.repository.filter((item) => item.Done === done);
+    if (done !== undefined) {
+      tasks = tasks.filter((item) => item.Done === done);
     }
 
-    if (archived) {
-      tasks = this.repository.filter((item) => item.Archived === archived);
+    if (archived !== undefined) {
+      tasks = tasks.filter((item) => item.Archived === archived);
     }
 
     if (title) {
-      tasks = this.repository.filter((item) => item.Title.toLowerCase().includes(title.toLowerCase()));
+      tasks = tasks.filter((item) => item.Title.toLowerCase().includes(title.toLowerCase()));
     }
 
     if (description) {
-      tasks = this.repository.filter((item) => item.Description.toLowerCase().includes(description.toLowerCase()));
+      tasks = tasks.filter((item) => item.Description.toLowerCase().includes(description.toLowerCase()));
     }
 
     return tasks;
