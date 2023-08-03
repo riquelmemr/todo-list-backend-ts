@@ -3,6 +3,7 @@ import express from "express";
 import { CreateTaskController, DeleteTaskController, FindAllTasksController, UpdateTaskController } from "./controllers/task";
 import { CreateUserController, LoginUserController } from "./controllers/user";
 import { createTaskValidation, createUserValidation, loginUserValidation, updateTaskValidation } from "./middlewares";
+import { authMiddleware } from "./middlewares/auth/auth";
 import { TaskRepository } from "./repositories/task/task.repository";
 import { UserRepository } from "./repositories/user/user.repository";
 import { CreateTaskUseCase, DeleteTaskUseCase, FindAllTasksUseCase } from "./usecases/task";
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
   });
 })
 
-const userRepository = new UserRepository();
+export const userRepository = new UserRepository();
 
 app.post("/user/create", createUserValidation, (req, res) => {
   const createUserUseCase = new CreateUserUseCase(userRepository);
@@ -35,28 +36,28 @@ app.post('/user/login', loginUserValidation, (req, res) => {
   return loginUserController.execute(req, res)
 })
 
-const taskRepository = new TaskRepository();
+export const taskRepository = new TaskRepository();
 
-app.post('/task/:userId/create', createTaskValidation, (req, res) => {
-  const createTaskUseCase = new CreateTaskUseCase(userRepository, taskRepository);
+app.post('/task/:userId/create', authMiddleware, createTaskValidation, (req, res) => {
+  const createTaskUseCase = new CreateTaskUseCase(taskRepository);
   const createTaskController = new CreateTaskController(createTaskUseCase);
   return createTaskController.execute(req, res);
 })
 
-app.delete('/task/:userId/delete/:id', (req, res) => {
-  const deleteTaskUseCase = new DeleteTaskUseCase(userRepository, taskRepository);
+app.delete('/task/:userId/delete/:id', authMiddleware, (req, res) => {
+  const deleteTaskUseCase = new DeleteTaskUseCase(taskRepository);
   const deleteTaskController = new DeleteTaskController(deleteTaskUseCase);
   return deleteTaskController.execute(req, res);
 })
 
-app.get('/task/:userId', (req, res) => {
-  const findAllTasksUseCase = new FindAllTasksUseCase(userRepository, taskRepository);
+app.get('/task/:userId', authMiddleware, (req, res) => {
+  const findAllTasksUseCase = new FindAllTasksUseCase(taskRepository);
   const findAllTasksController = new FindAllTasksController(findAllTasksUseCase);
   return findAllTasksController.execute(req, res);
 })
 
-app.put('/task/:userId/update/:id', updateTaskValidation, (req, res) => {
-  const updateTaskUseCase = new UpdateTaskUseCase(userRepository, taskRepository);
+app.put('/task/:userId/update/:id', authMiddleware, updateTaskValidation, (req, res) => {
+  const updateTaskUseCase = new UpdateTaskUseCase(taskRepository);
   const updateTaskController = new UpdateTaskController(updateTaskUseCase);
   return updateTaskController.execute(req, res);
 })

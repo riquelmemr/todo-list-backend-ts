@@ -1,20 +1,13 @@
  import { HttpResponse, IHttpResponse } from "../../../helpers/http-response";
 import { TaskRepository } from "../../../repositories/task/task.repository";
-import { UserRepository } from "../../../repositories/user/user.repository";
 import { IDeleteTaskRequestDTO } from "./delete-task.dto";
 
 class DeleteTaskUseCase {
-  constructor(private userRepository: UserRepository, private taskRepository: TaskRepository) {}
+  constructor(private taskRepository: TaskRepository) {}
 
   execute(data: IDeleteTaskRequestDTO): IHttpResponse {
     try {
       const { id, userId } = data;
-
-      const userFound = this.userRepository.getById(userId);
-
-      if (!userFound) {
-        throw new Error("Utilize um email válido ou cadastre-se para deletar tarefas.");
-      }
 
       const task = this.taskRepository.getById(id);
 

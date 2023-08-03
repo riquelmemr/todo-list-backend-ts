@@ -1,21 +1,14 @@
 import { HttpResponse } from "../../../helpers/http-response";
 import { TaskRepository } from "../../../repositories/task/task.repository";
-import { UserRepository } from "../../../repositories/user/user.repository";
 import { IUpdateTaskRequestDTO } from "./update-task.dto";
 
 class UpdateTaskUseCase {
-  constructor(private userRepository: UserRepository, private taskRepository: TaskRepository) {}
+  constructor(private taskRepository: TaskRepository) {}
 
   execute(userId: string, data: IUpdateTaskRequestDTO) {
     try {
       const { id, title, description, done, archived } = data;
 
-      const userFound = this.userRepository.getById(userId);
-  
-      if (!userFound) {
-        throw new Error("Realize o login ou cadastre-se para editar uma tarefa.");
-      }
-  
       const task = this.taskRepository.getById(id);
   
       if (!task || task.UserId !== userId) {
