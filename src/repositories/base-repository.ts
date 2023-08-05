@@ -1,7 +1,7 @@
 import { capitalize } from "../helpers/capitalize";
 import { IBaseRepository } from "./base-repository.interface";
 
-class BaseRepository<T> implements IBaseRepository<T> {
+abstract class BaseRepository<T> implements IBaseRepository<T> {
   constructor(protected repository: T[]) {
     this.repository = repository;
   }
